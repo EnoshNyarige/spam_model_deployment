@@ -24,7 +24,7 @@ st.markdown(html_temp,unsafe_allow_html=True)
 user_input =st.text_area("Copy your email here","")
 st.write("***The email provided reads;***\n\n" , user_input)
 
-tokenizer_file = "vec_tokenizer.pickel"
+tokenizer_file = "vec_tokenizer.sav"
 tokenizer = pickle.load(open(tokenizer_file, "rb"))
 
 
@@ -33,7 +33,7 @@ text_seq = tokenizer.texts_to_sequences(user_input)
 padded_text_seq = pad_sequences(text_seq, maxlen=6, padding="post") 
 
 # 
-model_file = "model.h5"
+model_file = "spam_model.h5"
 bilstm_model = load_model(model_file, compile = False)
 
 y_pred = bilstm_model.predict(padded_text_seq)
