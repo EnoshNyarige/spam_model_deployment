@@ -6,20 +6,22 @@ from tensorflow.keras.preprocessing.sequence import pad_sequences
 from tensorflow.keras.models import load_model
 
 
-st.title("Email Classifier")
-	# st.subheader("ML App with Streamlit")
+st.title("The Email Classification Predictor")
+st.subheader("Determine if that email you received is spam or not")
 html_temp = """
-	<div style="background-color:blue;padding:10px">
-	<h1 style="color:white;text-align:center;">Streamlit ML App </h1>
+	<div style="background-color:black;padding:10px">
+	<h3 style="color:white;text-align:center;">Machine Learning</h3>
 	</div>
-
+	<div>
+	<p style="color:white;text-align:center;">\n\nDeogratius Amani \n\nYves Mugenga \n\nEnosh Nyarige</p>
+	</div>
 	"""
 st.markdown(html_temp,unsafe_allow_html=True)
 
 # Get user input
-user_input =st.text_area("Enter Email Here","Type Here")
+user_input =st.text_area("Copy your email here","")
 
-st.write("***User Email: ***:" , user_input)
+st.write("***The email provided reads;***\n\n" , user_input)
 
 # Load the tokenizer object
 tokenizer_file = "tokenize.sav"
@@ -39,6 +41,6 @@ y_pred = np.argmax(y_pred, axis=1)
 
 if st.button("Predict"):
     if y_pred[0] == 0:
-        st.write("Prediction: ***Ham***")
+        st.write("The classifier says this a **Ham** email. No need for more caution")
     elif y_pred[0] == 1:
-        st.write("Prediction: ***Spam***")
+        st.write("The classifier says this a **Spam** email. Proceed with caution")
