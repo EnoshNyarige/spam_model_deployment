@@ -18,28 +18,25 @@ html_temp = """
 	"""
 st.markdown(html_temp,unsafe_allow_html=True)
 
-# Get user input
 user_input =st.text_area("Copy your email here","")
-
 st.write("***The email provided reads;***\n\n" , user_input)
 
-# Load the tokenizer object
-tokenizer_file = "tokenize.sav"
+tokenizer_file = "vec_tokenizer.pickel"
 tokenizer = pickle.load(open(tokenizer_file, "rb"))
 
-# Prepare user input
+
 user_input = [user_input.split(" ")]
 text_seq = tokenizer.texts_to_sequences(user_input)
 padded_text_seq = pad_sequences(text_seq, maxlen=4, padding="post") 
 
-# Load the model (keras)
-model_file = "model.h5"
+# Open the saved model
+model_file = "spam_model.h5"
 bilstm_model = load_model(model_file, compile = False)
 
 y_pred = bilstm_model.predict(padded_text_seq)
 y_pred = np.argmax(y_pred, axis=1)
 
-if st.button("Predict"):
+if st.button("Classify"):
     if y_pred[0] == 0:
         st.write("The classifier says this a **Ham** email. No need for more caution")
     elif y_pred[0] == 1:
